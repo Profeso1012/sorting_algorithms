@@ -1,68 +1,57 @@
 #include "sort.h"
 
-/**
- * lomuto_partition - Lomuto partition scheme
- * @array: The array to be sorted
- * @low: Starting index
- * @high: Ending index
- * @size: Size of the array
- *
- * Return: Index of the pivot element
- */
-int lomuto_partition(int *array, int low, int high, size_t size)
-{
-	int pivot = array[high];
-	int i = low - 1, j, tmp;
 
-	for (j = low; j < high; j++)
-	{
-		if (array[j] < pivot)
-		{
-			i++;
-			tmp = array[i];
-			array[i] = array[j];
-			array[j] = tmp;
-			print_array(array, size);
-		}
-	}
-	if (array[high] < array[i + 1])
-	{
-		tmp = array[i + 1];
-		array[i + 1] = array[high];
-		array[high] = tmp;
-		print_array(array, size);
-	}
-	return (i + 1);
+void swap(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+    printf("%d, ", *a);
 }
 
-/**
- * quick_sort_recursive - Recursive function for Quick sort
- * @array: The array to be sorted
- * @low: Starting index
- * @high: Ending index
- * @size: Size of the array
- */
-void quick_sort_recursive(int *array, int low, int high, size_t size)
-{
-	int pivot_index;
 
-	if (low < high)
-	{
-		pivot_index = lomuto_partition(array, low, high, size);
-		quick_sort_recursive(array, low, pivot_index - 1, size);
-		quick_sort_recursive(array, pivot_index + 1, high, size);
-	}
+int partition(int arr[], int low, int high) {
+    int pivot = arr[high];
+    int i = (low - 1);
+
+    for (int j = low; j < high; j++) {
+        if (arr[j] <= pivot) {
+            i++;
+            swap(&arr[i], &arr[j]);
+        }
+    }
+    swap(&arr[i + 1], &arr[high]);
+    return (i + 1);
 }
 
-/**
- * quick_sort - Sorts an array of integers using Quick sort algorithm
- * @array: The array to be sorted
- * @size: Number of elements in the array
- */
-void quick_sort(int *array, size_t size)
-{
-	if (array == NULL || size < 2)
-		return;
 
-	quick_sort_recursive(array, 0, size - 1, size);
+void quickSort(int arr[], int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+
+void printArray(int arr[], int n) {
+    for (int i = 0; i < n; ++i) {
+        printf("%d, ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {19, 48, 99, 71, 13, 52, 96, 73, 86, 7};
+    int n = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Unsorted array: \n");
+    printArray(arr, n);
+
+    quickSort(arr, 0, n - 1);
+
+    printf("\nSorted array: \n");
+    printArray(arr, n);
+
+    return 0;
 }

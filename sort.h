@@ -23,8 +23,11 @@ void print_list(const listint_t *list);
 void bubble_sort(int *array, size_t size);
 void insertion_sort_list(listint_t **list);
 void selection_sort(int *array, size_t size);
-int lomuto_partition(int *array, int low, int high, size_t size)
-void quick_sort_recursive(int *array, int low, int high, size_t size)
+int lomuto_partition(int *array, int low, int high, size_t size);
+/* quick_sort-recursive */
+void qsr(int *array, int low, int high, size_t size)
 void quick_sort(int *array, size_t size);
+
+void shell_sort(int *array, size_t size);
 
 #endif /* SORT_H */
